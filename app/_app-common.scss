@@ -1,6 +1,10 @@
 @import '@nativescript/theme/core';
 @import '@nativescript/theme/default';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
 
@@ -22,6 +26,7 @@
 
 // Custom tabstrip item class
 .navigation__item {
+
   &:active,
   &:active Label {
     @include colorize($color: complementary);
@@ -30,6 +35,7 @@
 
 // Common page class
 .page__content {
+
   &-icon,
   &-placeholder {
     color: const(grey);
