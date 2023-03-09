@@ -1,9 +1,13 @@
 <template>
   <StackLayout class="bg-[#F4F6FF]">
     <Header />
-    <Slider />
-    <Services />
-    <TopHandyman />
+    <ScrollView>
+      <GridLayout columns="*" rows="auto,auto,auto">
+        <Slider row="0" />
+        <Services row="1" />
+        <TopHandyman row="2" />
+      </GridLayout>
+    </ScrollView>
   </StackLayout>
 </template>
 

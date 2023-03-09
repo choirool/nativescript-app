@@ -1,53 +1,79 @@
 <template>
-  <MDBottomNavigation selectedIndex="0">
-    <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
-    <MDTabStrip class="bg-[#0157C8]">
-      <MDTabStripItem class="text-white">
-        <Label text="Home"></Label>
-        <Image src="~/assets/icons/home.png"></Image>
-      </MDTabStripItem>
-      <MDTabStripItem class="text-white">
-        <Label text="Chat"></Label>
-        <Image src="~/assets/icons/chat.png"></Image>
-      </MDTabStripItem>
-      <MDTabStripItem class="text-white">
-        <Label text="Booking"></Label>
-        <Image src="~/assets/icons/calendar.png" class="fas"></Image>
-      </MDTabStripItem>
-      <MDTabStripItem class="text-white">
-        <Label text="Profile"></Label>
-        <Image src="~/assets/icons/profile.png" class="fas"></Image>
-      </MDTabStripItem>
-    </MDTabStrip>
+  <Page
+    actionBarHidden="true"
+    @navigatedTo="onNavigatedTo"
+    @navigatingTo="onNavigatingTo"
+  >
+    <MDBottomNavigation v-if="isOpened" :selectedIndex="selectedIndex">
+      <MDTabStrip class="bg-[#0157C8]">
+        <MDTabStripItem class="text-white">
+          <Label text="Home"></Label>
+          <Image src="~/assets/icons/home.png"></Image>
+        </MDTabStripItem>
+        <MDTabStripItem class="text-white">
+          <Label text="Chat"></Label>
+          <Image src="~/assets/icons/chat.png"></Image>
+        </MDTabStripItem>
+        <MDTabStripItem class="text-white">
+          <Label text="Booking"></Label>
+          <Image src="~/assets/icons/calendar.png" class="fas"></Image>
+        </MDTabStripItem>
+        <MDTabStripItem class="text-white" @tap="gotoProfile">
+          <Label text="Profile"></Label>
+          <Image src="~/assets/icons/profile.png" class="fas"></Image>
+        </MDTabStripItem>
+      </MDTabStrip>
 
-    <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
-    <MDTabContentItem>
-      <Home />
-    </MDTabContentItem>
-    <MDTabContentItem>
-      <GridLayout>
-        <Label text="Chat Page" class="h2 text-center"></Label>
-      </GridLayout>
-    </MDTabContentItem>
-    <MDTabContentItem>
-      <GridLayout>
-        <Label text="Booking Page" class="h2 text-center"></Label>
-      </GridLayout>
-    </MDTabContentItem>
-    <MDTabContentItem>
-      <GridLayout>
-        <Label text="Profile Page" class="h2 text-center"></Label>
-      </GridLayout>
-    </MDTabContentItem>
-  </MDBottomNavigation>
+      <MDTabContentItem>
+        <Home />
+      </MDTabContentItem>
+      <MDTabContentItem>
+        <GridLayout>
+          <Label text="Chat Page" class="h2 text-center"></Label>
+        </GridLayout>
+      </MDTabContentItem>
+      <MDTabContentItem>
+        <GridLayout>
+          <Label text="Booking Page" class="h2 text-center"></Label>
+        </GridLayout>
+      </MDTabContentItem>
+      <MDTabContentItem>
+        <Label text="profile" class="" />
+      </MDTabContentItem>
+    </MDBottomNavigation>
+  </Page>
 </template>
 
 <script>
 import Home from "../pages/Home.vue";
+import Profile from "../pages/Profile.vue";
 
 export default {
   components: {
     Home,
+  },
+  data() {
+    return {
+      selectedIndex: 0,
+      isOpened: true,
+    };
+  },
+  methods: {
+    onNavigatingTo() {
+      this.isOpened = true;
+      this.selectedIndex = 0;
+    },
+    onNavigatedTo() {},
+    gotoProfile() {
+      this.isOpened = false;
+      this.$navigateTo(Profile, {
+        transition: {
+          name: "slideLeft",
+          duration: 100,
+          curve: "easeIn",
+        },
+      });
+    },
   },
 };
 </script>
